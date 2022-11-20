@@ -10,3 +10,9 @@ type Database interface {
 
 // MapSubjectToQuery is a map that contains the subject as key and the query as value.
 type MapSubjectToQuery map[string]string
+
+type DatabaseType string
+
+const (
+	TimeScaleDB DatabaseType = "timescaledb"
+)
