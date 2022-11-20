@@ -21,7 +21,8 @@ func (n *natsMQ) Connect() error {
 }
 
 func (n *natsMQ) Close() error {
-	panic("Not implemented")
+	n.natsConnection.Close()
+	return nil
 }
 
 func (n *natsMQ) Publish(subject string, data interface{}) error {
