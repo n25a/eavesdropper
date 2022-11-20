@@ -1,6 +1,8 @@
 package mq
 
 import (
+	"encoding/json"
+
 	"github.com/nats-io/nats.go"
 
 	"github.com/n25a/eavesdropper/internal/config"
@@ -26,7 +28,11 @@ func (n *natsMQ) Close() error {
 }
 
 func (n *natsMQ) Publish(subject string, data interface{}) error {
-	panic("Not implemented")
+	dataBytes, err := json.Marshal(data)
+	if err != nil {
+		return err
+	}
+	return n.natsConnection.Publish(subject, dataBytes)
 }
 
 func (n *natsMQ) Subscribe(subject string, handler func(payload interface{})) error {
