@@ -23,12 +23,12 @@ type Log struct {
 
 type MQ struct {
 	Type mq.MQType `yaml:"type"`
-	Conf mq.MQConf `yaml:"conf"`
+	Conf mq.Conf   `yaml:"conf"`
 }
 
 type Database struct {
 	Type database.DatabaseType `yaml:"type"`
-	Conf database.DatabaseConf `yaml:"conf"`
+	Conf database.Conf         `yaml:"conf"`
 }
 
 func LoadConfig(configPath string) error {
