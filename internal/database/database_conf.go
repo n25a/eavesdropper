@@ -1,3 +1,5 @@
 package database
 
-type Conf struct{}
+type Conf struct {
+	Address string `yaml:"address"`
+}
