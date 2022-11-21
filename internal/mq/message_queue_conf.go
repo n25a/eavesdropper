@@ -1,3 +1,5 @@
 package mq
 
-type MQConf struct{}
+type Conf struct {
+	NatsAddress string `json:"nats_address"`
+}
