@@ -12,9 +12,10 @@ import (
 var C *Config
 
 type Config struct {
-	Log      Log      `yaml:"log"`
-	MQ       MQ       `yaml:"mq"`
-	Database Database `yaml:"database"`
+	Log        Log      `yaml:"log"`
+	MQ         MQ       `yaml:"mq"`
+	Database   Database `yaml:"database"`
+	SchemaPath string   `yaml:"schema_path"`
 }
 
 type Log struct {
@@ -27,8 +28,9 @@ type MQ struct {
 }
 
 type Database struct {
-	Type database.DatabaseType `yaml:"type"`
-	Conf database.Conf         `yaml:"conf"`
+	Type          database.DatabaseType `yaml:"type"`
+	MigrationPath string                `yaml:"migration_path"`
+	Conf          database.Conf         `yaml:"conf"`
 }
 
 func LoadConfig(configPath string) error {
