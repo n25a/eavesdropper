@@ -2,10 +2,15 @@ package database
 
 import (
 	"context"
+	"database/sql"
+	"errors"
 
-	"github.com/n25a/eavesdropper/internal/config"
+	"github.com/golang-migrate/migrate"
+	libmigratepostgres "github.com/golang-migrate/migrate/database/postgres"
 
 	"github.com/jackc/pgx/v4/pgxpool"
+
+	"github.com/n25a/eavesdropper/internal/config"
 )
 
 type timescaleDB struct {
@@ -28,15 +33,42 @@ func (t *timescaleDB) Connect() error {
 	return nil
 }
 
-// CreateTable creates all tables in the database.
-func (t *timescaleDB) CreateTable() error {
-	panic("Not implemented")
-}
-
 // Close closes the connection with the database.
 func (t *timescaleDB) Close() error {
 	t.dbPool.Close()
 	return nil
+}
+
+// CreateTable creates all tables in the database.
+func (t *timescaleDB) CreateTable() error {
+	// TODO: Create migration files from schema and migrate them.
+	if config.C.Database.MigrationPath == "" {
+		return errors.New("migration path is empty")
+	}
+
+	// TODO: create data source name from config.
+	db, err := sql.Open("postgres", "postgres://localhost:5432/database?sslmode=enable")
+	if err != nil {
+		return err
+	}
+
+	driver, err := libmigratepostgres.WithInstance(db, &libmigratepostgres.Config{})
+	if err != nil {
+		return err
+	}
+
+	m, err := migrate.NewWithDatabaseInstance(
+		"file:///"+config.C.Database.MigrationPath,
+		"postgres",
+		driver,
+	)
+	if err != nil {
+		return err
+	}
+
+	err = m.Up()
+
+	return err
 }
 
 // Insert inserts the data in the database.
