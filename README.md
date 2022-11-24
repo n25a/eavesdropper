@@ -6,7 +6,7 @@
 * [ ] dockerized
 * [ ] makefile
 * [ ] config file
-* [ ] GitHub actions
+* [X] GitHub actions
 * [ ] test
 * [ ] query builder
 * [ ] app package
@@ -18,7 +18,8 @@
 * [ ] license
 * [ ] contributing
 * [ ] security
-* [ ] issue templates
+* [X] issue templates
+* [X] feature templates
 * [ ] pull request templates
 * [ ] gitignore
 * [ ] changelog
