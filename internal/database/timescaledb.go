@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"errors"
+	"fmt"
 
 	"github.com/golang-migrate/migrate"
 	libmigratepostgres "github.com/golang-migrate/migrate/database/postgres"
@@ -26,7 +27,7 @@ func NewTimescaleDB() Database {
 func (t *timescaleDB) Connect() error {
 	var err error
 	ctx := context.Background()
-	t.dbPool, err = pgxpool.Connect(ctx, config.C.Database.Conf.Address)
+	t.dbPool, err = pgxpool.Connect(ctx, t.dsn())
 	if err != nil {
 		return err
 	}
@@ -39,15 +40,14 @@ func (t *timescaleDB) Close() error {
 	return nil
 }
 
-// CreateTable creates all tables in the database.
-func (t *timescaleDB) CreateTable() error {
+// Migrate creates all tables in the database.
+func (t *timescaleDB) Migrate() error {
 	// TODO: Create migration files from schema and migrate them.
 	if config.C.Database.MigrationPath == "" {
 		return errors.New("migration path is empty")
 	}
 
-	// TODO: create data source name from config.
-	db, err := sql.Open("postgres", "postgres://localhost:5432/database?sslmode=enable")
+	db, err := sql.Open("postgres", t.dsn())
 	if err != nil {
 		return err
 	}
@@ -78,4 +78,13 @@ func (t *timescaleDB) Insert(ctx context.Context, query string, arguments ...int
 		return err
 	}
 	return nil
+}
+
+// dsn return data source name
+func (timescaleDB) dsn() string {
+	return fmt.Sprintf(
+		"postgres://%s:%s@%s:%s/%s?parseTime=true&multiStatements=true&interpolateParams=true&collation=utf8mb4_general_ci",
+		config.C.Database.Conf.User, config.C.Database.Conf.Password, config.C.Database.Conf.Host,
+		config.C.Database.Conf.Port, config.C.Database.Conf.DatabaseName,
+	)
 }
