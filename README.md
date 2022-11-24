@@ -10,7 +10,7 @@
 * [ ] test
 * [ ] query builder
 * [ ] app package
-* [ ] DSN
+* [X] DSN
 * [ ] CLI
 * [ ] docs
 * [ ] examples
