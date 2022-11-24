@@ -17,7 +17,7 @@
 * [ ] release
 * [ ] license
 * [ ] contributing
-* [ ] security
+* [X] security
 * [X] issue templates
 * [X] feature templates
 * [ ] pull request templates
