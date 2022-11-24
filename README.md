@@ -9,7 +9,7 @@
 * [X] GitHub actions
 * [ ] test
 * [ ] query builder
-* [ ] app package
+* [X] app package
 * [X] DSN
 * [ ] CLI
 * [ ] docs

@@ -18,3 +18,10 @@ type DatabaseType string
 const (
 	TimeScaleDB DatabaseType = "timescaledb"
 )
+
+func NewDatabase(databaseType DatabaseType) Database {
+	if databaseType == TimeScaleDB {
+		return NewTimescaleDB()
+	}
+	return nil
+}
