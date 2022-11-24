@@ -1,11 +1,13 @@
 package database
 
+import "context"
+
 // Database is the interface that wraps the basic database operations.
 type Database interface {
 	Connect() error
-	CreateTable() error
+	Migrate() error
 	Close() error
-	Insert(query string, data interface{}) error
+	Insert(ctx context.Context, query string, arguments ...interface{}) error
 }
 
 // MapSubjectToQuery is a map that contains the subject as key and the query as value.
