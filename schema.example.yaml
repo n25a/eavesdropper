@@ -1,7 +1,6 @@
-schema:
-  - subject: "test-subject-1"
-    data: |
-      "{ "data" : 12, "status" : "OK" }"
-  - subject: "test-subject-2"
-    data: |
-      "{ "var1" : "example", "var2" : "OK", "var3" : 45.6 }"
+- subject: "test-subject-1"
+  data: |
+    "{ "data" : 12, "status" : "OK" }"
+- subject: "test-subject-2"
+  data: |
+    "{ "var1" : "example", "var2" : "OK", "var3" : 45.6 }"
