@@ -15,11 +15,11 @@
 * [ ] docs
 * [ ] examples
 * [ ] release
-* [ ] license
+* [X] license
 * [ ] contributing
 * [X] security
 * [X] issue templates
 * [X] feature templates
-* [ ] pull request templates
-* [ ] gitignore
+* [X] pull request templates
+* [X] gitignore
 * [ ] changelog
