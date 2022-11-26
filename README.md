@@ -13,7 +13,7 @@
 * [X] pull request templates
 * [X] gitignore
 * [X] query builder
-* [ ] logger
+* [X] logger
 * [ ] config file
 * [ ] dockerized
 * [ ] makefile
