@@ -16,7 +16,7 @@
 * [X] logger
 * [X] config file
 * [X] dockerized
-* [ ] makefile
+* [X] makefile
 * [ ] godoc
 * [ ] readme
 * [ ] test
