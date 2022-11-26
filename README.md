@@ -2,24 +2,26 @@
 
 
 ## todo
-* [ ] readme
-* [ ] dockerized
-* [ ] makefile
-* [ ] config file
 * [X] GitHub actions
-* [ ] test
-* [ ] query builder
 * [X] app package
 * [X] DSN
-* [ ] CLI
-* [ ] docs
-* [ ] examples
-* [ ] release
+* [X] CLI
 * [X] license
-* [ ] contributing
 * [X] security
 * [X] issue templates
 * [X] feature templates
 * [X] pull request templates
 * [X] gitignore
+* [ ] query builder
+* [ ] logger
+* [ ] config file
+* [ ] dockerized
+* [ ] makefile
+* [ ] godoc
+* [ ] readme
+* [ ] test
+* [ ] Nats config
+* [ ] helm
 * [ ] changelog
+* [ ] release
+* [ ] contributing
