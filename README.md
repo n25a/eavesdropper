@@ -17,7 +17,7 @@
 * [X] config file
 * [X] dockerized
 * [X] makefile
-* [ ] godoc
+* [X] godoc
 * [ ] readme
 * [ ] test
 * [ ] Nats config
