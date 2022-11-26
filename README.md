@@ -12,7 +12,7 @@
 * [X] feature templates
 * [X] pull request templates
 * [X] gitignore
-* [ ] query builder
+* [X] query builder
 * [ ] logger
 * [ ] config file
 * [ ] dockerized

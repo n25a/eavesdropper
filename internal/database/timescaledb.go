@@ -5,10 +5,12 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"strings"
 
+	"github.com/doug-martin/goqu/v9"
+	_ "github.com/doug-martin/goqu/v9/dialect/postgres"
 	"github.com/golang-migrate/migrate"
 	libmigratepostgres "github.com/golang-migrate/migrate/database/postgres"
-
 	"github.com/jackc/pgx/v4/pgxpool"
 
 	"github.com/n25a/eavesdropper/internal/config"
@@ -78,6 +80,22 @@ func (t *timescaleDB) Insert(ctx context.Context, query string, arguments ...int
 		return err
 	}
 	return nil
+}
+
+func (t *timescaleDB) BuildInsertQuery(table string, fields []string) string {
+	dialect := goqu.Dialect("postgres")
+	ds := dialect.Insert(table)
+
+	var records goqu.Record
+	for _, f := range fields {
+		records[f] = "?"
+	}
+	ds = ds.Rows(records)
+	query, _, _ := ds.ToSQL()
+
+	query = strings.ReplaceAll(query, "'", "")
+
+	return query
 }
 
 // dsn return data source name
