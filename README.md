@@ -44,7 +44,7 @@ Data is a json example of message that received from message queue.
     "{ "var1" : "example", "var2" : "OK", "var3" : 45.6 }"
 ````
 
-## How to run locally
+## How to run locally?
 After cloning the project, you can run it locally by using the following commands:
 
 ```bash
