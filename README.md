@@ -14,7 +14,7 @@
 * [X] gitignore
 * [X] query builder
 * [X] logger
-* [ ] config file
+* [X] config file
 * [ ] dockerized
 * [ ] makefile
 * [ ] godoc
