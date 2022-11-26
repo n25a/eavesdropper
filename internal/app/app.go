@@ -25,6 +25,7 @@ type Schema struct {
 
 type schemaBinder struct {
 	Subject string `yaml:"subject"`
+	Table   string `yaml:"table"`
 	Data    string `yaml:"data"`
 }
 
@@ -65,11 +66,12 @@ func InitApp() error {
 			fields = append(fields, k)
 		}
 
-		// TODO: Parse query (after add query builder)
+		query := A.DB.BuildInsertQuery(b.Table, fields)
 
 		// Add schema
 		A.Schemas[b.Subject] = Schema{
 			Fields: fields,
+			Query:  query,
 		}
 	}
 
