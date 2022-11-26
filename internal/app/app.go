@@ -4,8 +4,11 @@ import (
 	"encoding/json"
 	"os"
 
+	"go.uber.org/zap"
+
 	"github.com/n25a/eavesdropper/internal/config"
 	"github.com/n25a/eavesdropper/internal/database"
+	"github.com/n25a/eavesdropper/internal/log"
 	"github.com/n25a/eavesdropper/internal/mq"
 	"gopkg.in/yaml.v3"
 )
@@ -44,7 +47,7 @@ func InitApp() error {
 	defer func(file *os.File) {
 		err := file.Close()
 		if err != nil {
-			panic(err)
+			log.Logger.Warn("error in closing schema file", zap.Error(err))
 		}
 	}(file)
 

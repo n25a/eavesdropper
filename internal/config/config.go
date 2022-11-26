@@ -3,9 +3,12 @@ package config
 import (
 	"os"
 
+	"go.uber.org/zap"
+
 	"gopkg.in/yaml.v3"
 
 	"github.com/n25a/eavesdropper/internal/database"
+	"github.com/n25a/eavesdropper/internal/log"
 	"github.com/n25a/eavesdropper/internal/mq"
 )
 
@@ -41,7 +44,7 @@ func LoadConfig(configPath string) error {
 	defer func(file *os.File) {
 		err := file.Close()
 		if err != nil {
-			panic(err)
+			log.Logger.Warn("error in closing schema file", zap.Error(err))
 		}
 	}(file)
 
