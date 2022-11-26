@@ -1,6 +1,10 @@
 package mq
 
-import "github.com/nats-io/nats.go"
+import (
+	"context"
+)
+
+type insertFunction func(ctx context.Context, query string, arguments ...interface{}) error
 
 type MQType string
 
@@ -12,7 +16,7 @@ type MessageQueue interface {
 	Connect() error
 	Close() error
 	Publish(subject string, data interface{}) error
-	Subscribe(subject string, payload interface{}, handler func(payload interface{}) nats.MsgHandler) error
+	Subscribe(subject string, insertFunc insertFunction) error
 	UnSubscribe() error
 }
 
