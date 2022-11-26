@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  # Database
+  timesacaledb:
+    image: postgres:13-alpine
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: eavesdropper
+      POSTGRES_USER: eavesdropper_app
+      POSTGRES_PASSWORD: password
+
+  # Message Queue
+  nats:
+    image: nats-streaming:0.21.1-alpine
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+
+volumes:
+  db-data:
+    driver: local
