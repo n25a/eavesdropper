@@ -1,0 +1,16 @@
+mq:
+  type: nats
+  conf:
+    nats_address: "127.0.0.1:4222"
+
+database:
+  type: timescaledb
+  migration_path: "./migrations"
+  conf:
+    user: "eavesdropper_app"
+    password: "password"
+    host: "127.0.0.1"
+    port: "5432"
+    database_name: "eavesdropper"
+
+schema_path: "./schema.example.yaml"
