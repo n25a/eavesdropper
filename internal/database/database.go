@@ -11,9 +11,6 @@ type Database interface {
 	BuildInsertQuery(table string, fields []string) string
 }
 
-// MapSubjectToQuery is a map that contains the subject as key and the query as value.
-type MapSubjectToQuery map[string]string
-
 type DatabaseType string
 
 const (
