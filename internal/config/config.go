@@ -15,14 +15,9 @@ import (
 var C *Config
 
 type Config struct {
-	Log        Log      `yaml:"log"`
 	MQ         MQ       `yaml:"mq"`
 	Database   Database `yaml:"database"`
 	SchemaPath string   `yaml:"schema_path"`
-}
-
-type Log struct {
-	Level string `yaml:"level"`
 }
 
 type MQ struct {
