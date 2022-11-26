@@ -1,5 +1,6 @@
 package database
 
+// Conf is the configuration for the database.
 type Conf struct {
 	User         string `yaml:"user"`
 	Password     string `yaml:"password"`

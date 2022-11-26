@@ -82,6 +82,7 @@ func (t *timescaleDB) Insert(ctx context.Context, query string, arguments ...int
 	return nil
 }
 
+// BuildInsertQuery builder of the insert query.
 func (t *timescaleDB) BuildInsertQuery(table string, fields []string) string {
 	dialect := goqu.Dialect("postgres")
 	ds := dialect.Insert(table)

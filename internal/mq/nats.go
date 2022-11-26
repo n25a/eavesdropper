@@ -13,17 +13,19 @@ import (
 	"github.com/n25a/eavesdropper/internal/config"
 )
 
-const QGroup = "eavesdropper"
+const qGroup = "eavesdropper"
 
 type natsMQ struct {
 	natsConnection *nats.Conn
 	subscriptions  []*nats.Subscription
 }
 
+// NewNatsMQ - create new nats message queue
 func NewNatsMQ() MessageQueue {
 	return &natsMQ{}
 }
 
+// Connect - connect to nats
 func (n *natsMQ) Connect() error {
 	var err error
 	// TODO: add Options
@@ -31,11 +33,13 @@ func (n *natsMQ) Connect() error {
 	return err
 }
 
+// Close - close connection
 func (n *natsMQ) Close() error {
 	n.natsConnection.Close()
 	return nil
 }
 
+// Publish - publish message to nats
 func (n *natsMQ) Publish(subject string, data interface{}) error {
 	dataBytes, err := json.Marshal(data)
 	if err != nil {
@@ -44,8 +48,9 @@ func (n *natsMQ) Publish(subject string, data interface{}) error {
 	return n.natsConnection.Publish(subject, dataBytes)
 }
 
+// Subscribe - subscribe to nats
 func (n *natsMQ) Subscribe(subject string, insertFunc insertFunction) error {
-	sub, err := n.natsConnection.QueueSubscribe(subject, QGroup, natsHandler(insertFunc))
+	sub, err := n.natsConnection.QueueSubscribe(subject, qGroup, natsHandler(insertFunc))
 	if err != nil {
 		return err
 	}
@@ -54,6 +59,7 @@ func (n *natsMQ) Subscribe(subject string, insertFunc insertFunction) error {
 	return nil
 }
 
+// UnSubscribe - unsubscribe from nats
 func (n *natsMQ) UnSubscribe() error {
 	for _, sub := range n.subscriptions {
 		err := sub.Unsubscribe()
