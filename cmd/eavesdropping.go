@@ -31,6 +31,7 @@ func init() {
 	eavesdroppingCMD.Flags().StringVarP(&configPath, "config", "c", "", "config file")
 }
 
+// Eavesdropping - consuming messages and store it in db
 func Eavesdropping() {
 	if err := config.LoadConfig(configPath); err != nil {
 		log.Logger.Panic("error in loading config", zap.Error(err))

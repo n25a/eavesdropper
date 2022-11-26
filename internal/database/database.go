@@ -11,12 +11,15 @@ type Database interface {
 	BuildInsertQuery(table string, fields []string) string
 }
 
+// DatabaseType is the type of database.
 type DatabaseType string
 
+// Database types
 const (
 	TimeScaleDB DatabaseType = "timescaledb"
 )
 
+// NewDatabase returns a new database instance.
 func NewDatabase(databaseType DatabaseType) Database {
 	if databaseType == TimeScaleDB {
 		return NewTimescaleDB()
