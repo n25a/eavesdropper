@@ -15,7 +15,7 @@
 * [X] query builder
 * [X] logger
 * [X] config file
-* [ ] dockerized
+* [X] dockerized
 * [ ] makefile
 * [ ] godoc
 * [ ] readme
