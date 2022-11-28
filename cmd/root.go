@@ -25,7 +25,7 @@ var (
 
 func init() {
 	fmt.Println(asciiArt)
-	rootCMD.AddCommand(eavesdroppingCMD)
+	rootCMD.AddCommand(eavesdroppingCMD, migrationCMD)
 }
 
 // Execute executes the root command.
