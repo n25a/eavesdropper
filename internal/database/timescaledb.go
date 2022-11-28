@@ -82,6 +82,18 @@ func (t *timescaleDB) Insert(ctx context.Context, query string, arguments ...int
 	return nil
 }
 
+// Get returns the data from the database.
+func (t *timescaleDB) Get(ctx context.Context, query string, dest interface{}, arguments ...interface{}) (interface{}, error) {
+	err := t.dbPool.QueryRow(ctx, query, arguments...).Scan(dest)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return nil, ErrNotFound
+		}
+		return nil, err
+	}
+	return dest, nil
+}
+
 // BuildInsertQuery builder of the insert query.
 func (t *timescaleDB) BuildInsertQuery(table string, fields []string) string {
 	dialect := goqu.Dialect("postgres")
