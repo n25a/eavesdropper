@@ -16,24 +16,24 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var configPath string
+var ConfigPath string
 
 var eavesdroppingCMD = &cobra.Command{
 	Use:     "eavesdropping",
 	Aliases: []string{"ed"},
 	Short:   "Consuming messages and store it in db",
 	Run: func(cmd *cobra.Command, args []string) {
-		Eavesdropping()
+		Eavesdropping(nil)
 	},
 }
 
 func init() {
-	eavesdroppingCMD.Flags().StringVarP(&configPath, "config", "c", "", "config file")
+	eavesdroppingCMD.Flags().StringVarP(&ConfigPath, "config", "c", "", "config file")
 }
 
 // Eavesdropping - consuming messages and store it in db
-func Eavesdropping() {
-	if err := config.LoadConfig(configPath); err != nil {
+func Eavesdropping(shutdown *chan os.Signal) {
+	if err := config.LoadConfig(ConfigPath); err != nil {
 		log.Logger.Panic("error in loading config", zap.Error(err))
 	}
 
@@ -63,8 +63,11 @@ func Eavesdropping() {
 		}
 	}(app.A.DB)
 
-	shutdown := make(chan os.Signal, 2)
-	signal.Notify(shutdown, os.Interrupt, syscall.SIGTERM)
+	if shutdown == nil {
+		shutdownChan := make(chan os.Signal, 2)
+		shutdown = &shutdownChan
+		signal.Notify(*shutdown, os.Interrupt, syscall.SIGTERM)
+	}
 
 	for subject, _ := range app.A.Schemas {
 		err := app.A.MQ.Subscribe(subject, app.A.DB.Insert)
@@ -73,5 +76,5 @@ func Eavesdropping() {
 		}
 	}
 
-	<-shutdown
+	<-*shutdown
 }
