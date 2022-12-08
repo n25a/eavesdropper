@@ -1,4 +1,4 @@
-    ![LOGO](https://user-images.githubusercontent.com/49960770/204108690-64eb8ae5-1fac-41f4-a846-c84a9f8c800f.png)
+![LOGO](https://user-images.githubusercontent.com/49960770/204108690-64eb8ae5-1fac-41f4-a846-c84a9f8c800f.png)
 
 # Eavesdropper
 Eavesdropper is project that used for consuming in message queue and storing in database.
