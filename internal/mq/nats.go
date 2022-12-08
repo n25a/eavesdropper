@@ -83,15 +83,17 @@ func natsHandler(insertFunc insertFunction) nats.MsgHandler {
 		ctx, cancel := context.WithTimeout(ctx, 2*time.Second)
 		defer cancel()
 
-		var args []interface{}
-		for _, field := range app.A.Schemas[msg.Subject].Fields {
-			args = append(args, data[field])
-		}
+		for _, schema := range app.A.Schemas[msg.Subject] {
+			var args []interface{}
+			for _, field := range schema.Fields {
+				args = append(args, data[field])
+			}
 
-		err = insertFunc(ctx, app.A.Schemas[msg.Subject].Query, args...)
-		if err != nil {
-			log.Fatalln(err)
-			return
+			err = insertFunc(ctx, schema.Query, args...)
+			if err != nil {
+				log.Fatalln(err)
+				return
+			}
 		}
 	}
 }
