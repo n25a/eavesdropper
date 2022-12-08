@@ -17,32 +17,50 @@ Eavesdropper will create table in database with migration files and create colum
 
 
 ### What is schema file?
-Schema file is a file that used for understanding the structure of message. It's contain three parts:
+Schema file is a file that used for understanding the structure of message. It's contain two parts:
 - Subject (required)
-- Table name (required)
-- Data (required)
+- Storage (required)
 
 
 #### Subject
 Subject is a topic that message queue should consume on it.
 
-#### Table name
+#### Storage
+Storage is a metadata of example message that received from message queue. It's contain list of two parts:
+- Table (required)
+- Field To DB Column (required)
+
+##### Table
 Table name is a name of table that message should store in it for selected subject.
 
-#### Data
-Data is a json example of message that received from message queue.
+##### Field To DB Column
+Field To DB Column is a list of field that message queue should store in database. It's a dictionary that key is 
+name of field in message and value is name of column in database.
 
-##### NOTE: You can define multiple subject in one schema file! Check example below.
+##### NOTE: You can define multiple subject in one schema file! Also, You can store fields of message in multiple table. Check example below.
 ````yaml
 - subject: "test-subject-1"
-  table: "test_one"
-  data: |
-    "{ "data" : 12, "status" : "OK" }"
+  storage:
+    - table: "test_one"
+      field_to_db_column:
+        data: "data"
+        status: "state"
+
 - subject: "test-subject-2"
-  table: "test_two"
-  data: |
-    "{ "var1" : "example", "var2" : "OK", "var3" : 45.6 }"
+  storage:
+    - table: "test_two"
+      field_to_db_column:
+        var1: "var_one"
+        var2: "status"
+    - table: "test_three"
+      field_to_db_column:
+        var1: "var_one"
+        var3: "var_three"
 ````
+In this example, Eavesdropper has three table in database with name of test_one and test_two. It's store data of message that received from test-subject-1 and test-subject-2.
+In "test-subject-2" topic, Eavesdropper store data of message in two table. var1 and var2 store in `test_two` and
+var1 and var3 store in `test_three`. 
+
 
 ## How to run locally?
 After cloning the project, you can run it locally by using the following commands:

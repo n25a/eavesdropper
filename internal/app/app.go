@@ -1,7 +1,6 @@
 package app
 
 import (
-	"encoding/json"
 	"os"
 
 	"go.uber.org/zap"
@@ -20,7 +19,7 @@ var A *App
 type App struct {
 	DB      database.Database
 	MQ      mq.MessageQueue
-	Schemas map[string]Schema
+	Schemas map[string][]Schema
 }
 
 // Schema - schema struct for each subject on message queue
@@ -29,10 +28,14 @@ type Schema struct {
 	Query  string
 }
 
+type storage struct {
+	Table           string            `yaml:"table"`
+	fieldToDBColumn map[string]string `yaml:"field_to_db_column"`
+}
+
 type schemaBinder struct {
-	Subject string `yaml:"subject"`
-	Table   string `yaml:"table"`
-	Data    string `yaml:"data"`
+	Subject string    `yaml:"subject"`
+	Storage []storage `yaml:"storage"`
 }
 
 // InitApp - initialize app
@@ -40,7 +43,7 @@ func InitApp() error {
 	A = &App{
 		DB:      database.NewDatabase(config.C.Database.Type),
 		MQ:      mq.NewMessageQueue(mq.NATS),
-		Schemas: map[string]Schema{},
+		Schemas: map[string][]Schema{},
 	}
 
 	// Load schema from file
@@ -63,23 +66,24 @@ func InitApp() error {
 
 	// Parse schema
 	for _, b := range binder {
-		// Parse fields
-		var data map[string]interface{}
-		if err := json.Unmarshal([]byte(b.Data), &data); err != nil {
-			return err
-		}
-		var fields []string
-		for k, _ := range data {
-			fields = append(fields, k)
-		}
+		var schemas []Schema
+		for _, s := range b.Storage {
+			var dbColumns []string
+			var fields []string
+			for field, dbColumn := range s.fieldToDBColumn {
+				dbColumns = append(dbColumns, dbColumn)
+				fields = append(fields, field)
+			}
 
-		query := A.DB.BuildInsertQuery(b.Table, fields)
+			query := A.DB.BuildInsertQuery(s.Table, dbColumns)
+			schemas = append(schemas, Schema{
+				Fields: fields,
+				Query:  query,
+			})
+		}
 
 		// Add schema
-		A.Schemas[b.Subject] = Schema{
-			Fields: fields,
-			Query:  query,
-		}
+		A.Schemas[b.Subject] = schemas
 	}
 
 	return nil
