@@ -16,8 +16,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var ConfigPath string
-
 var eavesdroppingCMD = &cobra.Command{
 	Use:     "eavesdropping",
 	Aliases: []string{"ed"},
@@ -25,10 +23,6 @@ var eavesdroppingCMD = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		Eavesdropping(nil)
 	},
-}
-
-func init() {
-	eavesdroppingCMD.Flags().StringVarP(&ConfigPath, "config", "c", "", "config file")
 }
 
 // Eavesdropping - consuming messages and store it in db

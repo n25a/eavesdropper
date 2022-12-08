@@ -13,6 +13,8 @@ var rootCMD = &cobra.Command{
 }
 
 var (
+	ConfigPath string
+
 	asciiArt = `
 ███████╗ █████╗ ██╗   ██╗███████╗███████╗██████╗ ██████╗  ██████╗ ██████╗ ██████╗ ███████╗██████╗ 
 ██╔════╝██╔══██╗██║   ██║██╔════╝██╔════╝██╔══██╗██╔══██╗██╔═══██╗██╔══██╗██╔══██╗██╔════╝██╔══██╗
@@ -25,7 +27,8 @@ var (
 
 func init() {
 	fmt.Println(asciiArt)
-	rootCMD.AddCommand(eavesdroppingCMD)
+	rootCMD.AddCommand(eavesdroppingCMD, migrationCMD)
+	rootCMD.Flags().StringVarP(&ConfigPath, "config", "c", "", "config file")
 }
 
 // Execute executes the root command.
