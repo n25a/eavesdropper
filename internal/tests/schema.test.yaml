@@ -1,8 +1,17 @@
-- subject: "subject-one"
-  table: "test_one"
-  data: |
-    "{ "data" : 12, "status" : "OK" }"
-- subject: "subject-two"
-  table: "test_two"
-  data: |
-    "{ "var1" : "example", "var2" : 3, "var3" : 45.6, "var4" : true }"
+- subject: "test-subject-1"
+  storage:
+    - table: "test_one"
+      field_to_db_column:
+        data: "data"
+        status: "state"
+
+- subject: "test-subject-2"
+  storage:
+    - table: "test_two"
+      field_to_db_column:
+        var1: "var_one"
+        var2: "status"
+    - table: "test_three"
+      field_to_db_column:
+        var1: "var_one"
+        var3: "var_three"
