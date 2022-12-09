@@ -38,6 +38,7 @@ func (suite *EavesdropperTimeScaleDBNatsTestSuite) SetupSuite() {
 	signal.Notify(suite.shutdown, os.Interrupt, syscall.SIGTERM)
 
 	// migrate database
+	cmd.Migration()
 
 	// stat service
 	go cmd.Eavesdropping(&suite.shutdown)
