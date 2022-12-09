@@ -14,16 +14,12 @@ var migrationCMD = &cobra.Command{
 	Use:   "migration",
 	Short: "Migrate Migration files to database",
 	Run: func(cmd *cobra.Command, args []string) {
-		migration()
+		Migration()
 	},
 }
 
-func init() {
-	migrationCMD.Flags().StringVarP(&configPath, "config", "c", "", "config file")
-}
-
-func migration() {
-	if err := config.LoadConfig(configPath); err != nil {
+func Migration() {
+	if err := config.LoadConfig(ConfigPath); err != nil {
 		log.Logger.Panic("error in loading config", zap.Error(err))
 	}
 
